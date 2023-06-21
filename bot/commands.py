@@ -63,6 +63,8 @@ def main():
             "mce": ["change something of all channels in the selected guild to something else", ["channel_id", "name", "topic"]],
             "mcc": ["create many channels specifying the set up for each of them in the selected guild", ["name", "topic", "channel_type", "amount"]],
             "mrc": ["create many roles specifying the set up for each of them in the selected guild", ["role_name", "color", "hoist", "mentionable", "amount"]],
+            "mmd": ["delete bulk messages in the selected channel", ["channel_id", "amount (optional)"]],
+            "mms": ["send many messages in the selected channel", ["channel_id", "content (without spaces)", "amount (optional)"]],
             "cg": ["change the guild where the changes will be applied", ["guild_id"]],
             "exit": ["closes the app", None]
         }
@@ -120,6 +122,10 @@ def main():
                 await mass_channel_create(params)
             elif command == 'mrc' or command == 'massrolecreate':
                 await mass_role_create(params)
+            elif command == 'mmd' or command == 'massmessagedelete':
+                await mass_message_delete(params)
+            elif command == 'mms' or command == 'massmessagesend':
+                await mass_message_send(params)
             else:
                 print("Invalid command. Type 'help' for a list of commands.")
             
@@ -346,6 +352,81 @@ def main():
             return
 
         print(Color.GREEN + str(amount) + " Roles with the name " + role_name + " have been created." + Color.ENDC)
+    
+    @bot.event
+    async def mass_message_delete(params):
+        if len(params) < 1:
+            print(Color.FAIL + "Please specify at least one parameter" + Color.ENDC)
+            return
+        channel_id = params[0] if len(params) >= 1 else None
+        if channel_id is None:
+            print(Color.FAIL + "Please specify a channel ID" + Color.ENDC)
+            return
+
+        try:
+            channel = guild.get_channel(int(channel_id))
+        except:
+            print(Color.FAIL + "Please specify a valid channel ID" + Color.ENDC)
+            return
+        # check if the channel is in the guild
+
+        try:
+            amount = int(params[1]) if len(params) >= 2 else 10
+        except:
+            print(Color.FAIL + "Please enter a valid number" + Color.ENDC)
+            return
+        
+        if amount < 1 or amount > 50:
+            print(Color.FAIL + "Please specify an amount between 1 and 50" + Color.ENDC)
+            return
+        
+        for _ in range(amount):
+            try:
+                await channel.purge(limit=1)
+                print(Color.YELLOW + f"Message {_ + 1} has been deleted" + Color.ENDC)
+            except discord.errors.Forbidden:
+                print(Color.FAIL + "I don't have permissions to delete messages" + Color.ENDC)
+                return
+        
+        print(Color.GREEN + f"Deleted {amount} messages in the channel {channel.name}" + Color.ENDC)  
+    
+    @bot.event  
+    async def mass_message_send(params):
+        if len(params) < 1:
+            print(Color.FAIL + "Please specify at least one parameter" + Color.ENDC)
+            return
+        channel_id = params[0] if len(params) >= 1 else None
+        if channel_id is None:
+            print(Color.FAIL + "Please specify a channel ID" + Color.ENDC)
+            return
+        content = params[1] if len(params) >= 2 else None
+        if content is None:
+            print(Color.FAIL + "Please specify a content" + Color.ENDC)
+            return
+        try:
+            channel = guild.get_channel(int(channel_id))
+        except:
+            print(Color.FAIL + "Please specify a valid channel ID" + Color.ENDC)
+            return
+        try:
+            amount = int(params[2]) if len(params) >= 3 else 10
+        except:
+            print(Color.FAIL + "Please enter a valid number" + Color.ENDC)
+            return
+        
+        if amount < 1 or amount > 50:
+            print(Color.FAIL + "Please specify an amount between 1 and 50" + Color.ENDC)
+            return
+        for _ in range(amount):
+            try:
+                await channel.send(content)
+                print(Color.YELLOW + f"Message {_ + 1} has been sent" + Color.ENDC)
+            except discord.errors.Forbidden:
+                print(Color.FAIL + "I don't have permissions to send messages" + Color.ENDC)
+                return
+            
+        print(Color.GREEN + f"Sent {amount} messages in the channel {channel.name}" + Color.ENDC)
+
 
     return bot
 
