@@ -82,7 +82,7 @@ def runCLI():
             print(Color.GREEN + "Token Valid. Signing in..." + Color.ENDC)
             # Run the bot in a thread with the token
             bot_thread = threading.Thread(target=bot.run, args=(token, ))
-            logging.basicConfig(level=logging.CRITICAL)
+            logging.disable()
             bot_thread.start()
             return
         else:
