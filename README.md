@@ -60,8 +60,6 @@ Enter `help` within the application to get a list of commands and their descript
  - [ ] Compile the app into an executable
  - [ ] Create a GUI version
 
-Sure! Here's an extended version of the information about how to contribute to the MDM (Mass Discord Moderation) project:
-
 ## Contributing
 
 The MDM project welcomes contributions from the open-source community. If you would like to contribute to the project, you can follow these steps:
