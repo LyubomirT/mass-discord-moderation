@@ -55,8 +55,8 @@ Enter `help` within the application to get a list of commands and their descript
 ## To-Do
 
  - [x] Split the code into different files
- - [x] Add message management options
- - [ ] Add interactions within discord
+ - [ ] Add message management options
+ - [ ] Add interactions within-discord
  - [ ] Compile the app into an executable
  - [ ] Create a GUI version
 
