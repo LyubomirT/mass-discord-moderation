@@ -5,8 +5,10 @@ import time
 import discord
 from discord.ext import commands
 import customtkinter as ctk
+import logging
 import requests
 import textwrap
+
 
 def clear_screen():
     if sys.platform.startswith('win'):
@@ -79,7 +81,8 @@ def runCLI():
         if check_token_validity(token):
             print(Color.GREEN + "Token Valid. Signing in..." + Color.ENDC)
             # Run the bot in a thread with the token
-            bot_thread = threading.Thread(target=bot.run, args=(token,))
+            bot_thread = threading.Thread(target=bot.run, args=(token, ))
+            logging.basicConfig(level=logging.CRITICAL)
             bot_thread.start()
             return
         else:
