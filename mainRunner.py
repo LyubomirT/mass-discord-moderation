@@ -447,6 +447,6 @@ async def mass_role_create(params):
         print(Color.FAIL + "I don't have permissions to create roles" + Color.ENDC)
         return
 
-    print(Color.GREEN + amount + " Roles with the name " + role_name + " have been created." + Color.ENDC)
+    print(Color.GREEN + str(amount) + " Roles with the name " + role_name + " have been created." + Color.ENDC)
 
 
