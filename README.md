@@ -47,6 +47,8 @@ You can then enter commands to perform various moderation actions. The available
 - `mce` or `masschanneledit`: Change something of all channels in the selected guild to something else.
 - `mcc` or `masschannelcreate`: Create many channels specifying the setup for each of them in the selected guild.
 - `mrc` or `massrolecreate`: Create many roles specifying the setup for each of them in the selected guild.
+- `mmd` or `massmessagedelete`: Delete some messages in the selected channel.
+- `mms` or `massmessagesend`: Send some messages in the selected channel.
 - `cg`: Change the guild where the changes will be applied.
 - `exit`: Close the application.
 
@@ -56,7 +58,6 @@ Enter `help` within the application to get a list of commands and their descript
 
  - [x] Split the code into different files
  - [x] Add message management options
- - [ ] Add interactions within-discord
  - [ ] Compile the app into an executable
  - [ ] Create a GUI version
 

@@ -1,17 +1,18 @@
 import discord
 from discord.ext import commands
+from discord.commands import slash_command, Option
 from utils.common import clear_screen, Color
 import time
 import textwrap
 import os
 
 def main():
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
 
     global bot
     bot = commands.Bot(command_prefix='!', intents=intents)
     bot.remove_command("help")
+
 
     @bot.event
     async def on_ready():
@@ -126,6 +127,7 @@ def main():
                 await mass_message_delete(params)
             elif command == 'mms' or command == 'massmessagesend':
                 await mass_message_send(params)
+                
             else:
                 print("Invalid command. Type 'help' for a list of commands.")
             

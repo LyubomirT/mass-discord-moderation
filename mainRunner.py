@@ -4,7 +4,7 @@ import sys
 import time
 import discord
 from discord.ext import commands
-import customtkinter as ctk
+from discord.commands import slash_command, Option
 import logging
 import textwrap
 from utils.common import clear_screen, Color
@@ -14,6 +14,8 @@ from bot.commands import *
 
 
 bot = main()
+
+
 
 token = None  # Define token as a global variable
 
@@ -59,7 +61,6 @@ def runCLI():
             print(Color.GREEN + "Token Valid. Signing in..." + Color.ENDC)
             # Run the bot in a thread with the token
             bot_thread = threading.Thread(target=bot.run, args=(token, ))
-            logging.disable()
             bot_thread.start()
             return
         else:
@@ -72,22 +73,11 @@ def runCLI():
 
 def switch_to_cli():
     clear_screen()
-    app.destroy()
     # Start the CLI thread
     cli_thread = threading.Thread(target=runCLI)
     cli_thread.start()
 
-app = ctk.CTk()
-app.title("Confirmation")
-app.geometry("300x200")
-
-label = ctk.CTkLabel(app, text="Launch CLI", font=("Roboto", 20))   
-label.pack(pady=20)
-
-cli_button = ctk.CTkButton(app, text="Proceed", command=switch_to_cli)
-cli_button.pack(pady=10)
+switch_to_cli()
 
 # Flag or event to indicate if CLI functionality has finished
 cli_finished = threading.Event()
-
-app.mainloop()
